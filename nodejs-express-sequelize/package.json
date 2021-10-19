@@ -1,0 +1,9 @@
+{
+  "name": "Nodejs-express-sequelize",
+  "version": "1.0.0",
+  "description": "Node.js Rest APIs with Express, Sequelize & mySQL",
+  "main": "server.js",
+  "repository": "https://github.com/Anonymous-DuckS/reactCRUD",
+  "author": "Anonymous-DuckS",
+  "license": "MIT"
+}
