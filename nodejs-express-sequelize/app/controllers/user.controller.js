@@ -1,22 +1,22 @@
 const db = require("../models");
-const User = db.Users;
+const User = db.user;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new User
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body.user_Name) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content can not be empty!" + req.body.user_Name
     });
     return;
   }
 
   // Create a User
   const User = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    user_Name: req.body.user_Name,
+    user_Pwd: req.body.user_Pwd ? req.body.user_Pwd : false,
+    user_Type: req.body.user_Type
   };
 
   // Save User in the database
@@ -34,8 +34,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+    const user_ID = req.query.user_ID;
+    var condition = user_ID ? { user_ID: { [Op.like]: `%${user_ID}%` } } : null;
   
     User.findAll({ where: condition })
       .then(data => {
@@ -49,33 +49,33 @@ exports.findAll = (req, res) => {
       });
 };
 
-// Find a single User with an id
+// Find a single User with an user_ID
 exports.findOne = (req, res) => {
-    const id = req.params.id;
+    const user_ID = req.params.user_ID;
 
-    User.findByPk(id)
+    User.findByPk(user_ID)
       .then(data => {
         if (data) {
           res.send(data);
         } else {
           res.status(404).send({
-            message: `Cannot find User with id=${id}.`
+            message: `Cannot find User with user_ID=${user_ID}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving User with id=" + id
+          message: "Error retrieving User with user_ID=" + user_ID
         });
       });
 };
 
-// Update a User by the id in the request
+// Update a User by the user_ID in the request
 exports.update = (req, res) => {
-    const id = req.params.id;
+    const user_ID = req.params.user_ID;
 
     User.update(req.body, {
-      where: { id: id }
+      where: { user_ID: user_ID }
     })
       .then(num => {
         if (num == 1) {
@@ -84,23 +84,23 @@ exports.update = (req, res) => {
           });
         } else {
           res.send({
-            message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
+            message: `Cannot update User with user_ID=${user_ID}. Maybe User was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating User with id=" + id
+          message: "Error updating User with user_ID=" + user_ID
         });
       });
 };
 
-// Delete a User with the specified id in the request
+// Delete a User with the specified user_ID in the request
 exports.delete = (req, res) => {
-    const id = req.params.id;
+    const user_ID = req.params.user_ID;
 
     User.destroy({
-      where: { id: id }
+      where: { user_ID: user_ID }
     })
       .then(num => {
         if (num == 1) {
@@ -109,13 +109,13 @@ exports.delete = (req, res) => {
           });
         } else {
           res.send({
-            message: `Cannot delete User with id=${id}. Maybe User was not found!`
+            message: `Cannot delete User with user_ID=${user_ID}. Maybe User was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete User with id=" + id
+          message: "Could not delete User with user_ID=" + user_ID
         });
       });
 };
@@ -137,9 +137,10 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-// Find all published Users
-exports.findAllPublished = (req, res) => {
-    User.findAll({ where: { published: true } })
+/*
+// Find all user_Pwd Users
+exports.findAlluser_Pwd = (req, res) => {
+    User.findAll({ where: { user_Pwd: true } })
     .then(data => {
       res.send(data);
     })
@@ -150,3 +151,4 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
+*/

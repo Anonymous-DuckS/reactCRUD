@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
@@ -11,21 +10,29 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
-app.use(bodyParser.json());
+app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // sync the model
 const db = require("./nodejs-express-sequelize/app/models");
 db.sequelize.sync();
+
+/*
+// drop the table if it already exists
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
+
+*/
 
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "The server works." });
 });
 
-require("./nodejs-express-sequelize/app/routes/student.routes")(app);
+require("./nodejs-express-sequelize/app/routes/user.routes")(app);
 
 
 // set port, listen for requests
