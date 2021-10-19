@@ -1,8 +1,8 @@
 const db = require("../models");
-const Student = db.Students;
+const User = db.Users;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Student
+// Create and Save a new User
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
@@ -12,141 +12,141 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Student
-  const Student = {
+  // Create a User
+  const User = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false
   };
 
-  // Save Student in the database
-  Student.create(Student)
+  // Save User in the database
+  User.create(User)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Student."
+          err.message || "Some error occurred while creating the User."
       });
     });
 };
 
-// Retrieve all Students from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
     const title = req.query.title;
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
   
-    Student.findAll({ where: condition })
+    User.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving Students."
+            err.message || "Some error occurred while retrieving Users."
         });
       });
 };
 
-// Find a single Student with an id
+// Find a single User with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Student.findByPk(id)
+    User.findByPk(id)
       .then(data => {
         if (data) {
           res.send(data);
         } else {
           res.status(404).send({
-            message: `Cannot find Student with id=${id}.`
+            message: `Cannot find User with id=${id}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Student with id=" + id
+          message: "Error retrieving User with id=" + id
         });
       });
 };
 
-// Update a Student by the id in the request
+// Update a User by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Student.update(req.body, {
+    User.update(req.body, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Student was updated successfully."
+            message: "User was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Student with id=${id}. Maybe Student was not found or req.body is empty!`
+            message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Student with id=" + id
+          message: "Error updating User with id=" + id
         });
       });
 };
 
-// Delete a Student with the specified id in the request
+// Delete a User with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Student.destroy({
+    User.destroy({
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Student was deleted successfully!"
+            message: "User was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Student with id=${id}. Maybe Student was not found!`
+            message: `Cannot delete User with id=${id}. Maybe User was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Student with id=" + id
+          message: "Could not delete User with id=" + id
         });
       });
 };
 
-// Delete all Students from the database.
+// Delete all Users from the database.
 exports.deleteAll = (req, res) => {
-    Student.destroy({
+    User.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Students were deleted successfully!` });
+          res.send({ message: `${nums} Users were deleted successfully!` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while removing all Students."
+              err.message || "Some error occurred while removing all Users."
           });
         });
 };
 
-// Find all published Students
+// Find all published Users
 exports.findAllPublished = (req, res) => {
-    Student.findAll({ where: { published: true } })
+    User.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Students."
+          err.message || "Some error occurred while retrieving Users."
       });
     });
 };

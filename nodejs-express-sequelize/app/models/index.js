@@ -19,6 +19,9 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.Students = require("./student.model.js")(sequelize, Sequelize);
+db.Users = require("./user.model.js")(sequelize, Sequelize);
+db.Venues = require("./venue.model.js")(sequelize, Sequelize);
+db.Games = require("./game.model.js")(sequelize, Sequelize);
+db.Game_Accounts = require("./game_account.model.js")(sequelize, Sequelize);
 
 module.exports = db;

@@ -2,34 +2,37 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory');
 
 module.exports = (sequelize, Sequelize) => {
-  class Student extends Model {}
+  class User extends Model {}
 
-  Student.init({
+  User.init({
     // Model attributes are defined here
-    student_ID: {
+    user_ID: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false
+    },
+    user_Name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    first_Name: {
+    user_Pwd: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    last_Name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    DOB: {
-      type: DataTypes.DATE,
+    user_Type: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 0,
       allowNull: false
     }
 
   }, {
     // Other model options go here
     sequelize, // We need to pass the connection instance
-    modelName: 'Student' // We need to choose the model name
+    modelName: 'User' // We need to choose the model name
   });
 
   // the defined model is the class itself
-  console.log(Student === sequelize.models.Student); // true
+  console.log(User === sequelize.models.User); // true
 
 }
