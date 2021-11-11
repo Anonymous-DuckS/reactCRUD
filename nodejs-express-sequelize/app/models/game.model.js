@@ -19,8 +19,8 @@ module.exports = (sequelize, Sequelize) => {
       type: DataTypes.INTEGER,
 
       references: {
-          model: 'venue',
-          key: 'id'
+          model: 'Venues',
+          key: 'venue_ID'
       },
       allowNull: false
     }
@@ -33,5 +33,5 @@ module.exports = (sequelize, Sequelize) => {
 
   // the defined model is the class itself
   console.log(Game === sequelize.models.Game); // true
-
+  return Game;
 }

@@ -4,7 +4,7 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
-  operatorsAliases: false,
+  operatorsAliases: 0,
 
   pool: {
     max: dbConfig.pool.max,
@@ -19,9 +19,9 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.Users = require("./user.model.js")(sequelize, Sequelize);
-db.Venues = require("./venue.model.js")(sequelize, Sequelize);
-db.Games = require("./game.model.js")(sequelize, Sequelize);
-db.Game_Accounts = require("./game_account.model.js")(sequelize, Sequelize);
+db.User = require("./user.model.js")(sequelize, Sequelize);
+db.Venue = require("./venue.model.js")(sequelize, Sequelize);
+db.Game = require("./game.model.js")(sequelize, Sequelize);
+db.Game_Account = require("./game_account.model.js")(sequelize, Sequelize);
 
 module.exports = db;

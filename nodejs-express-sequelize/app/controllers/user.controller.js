@@ -1,5 +1,6 @@
 const db = require("../models");
-const User = db.user;
+
+const User = db.User;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new User
@@ -7,20 +8,21 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.user_Name) {
     res.status(400).send({
-      message: "Content can not be empty!" + req.body.user_Name
+      message: "Content cannot be empty!" + req.body.user_Name
     });
     return;
   }
 
+  
   // Create a User
-  const User = {
+  const user = {
     user_Name: req.body.user_Name,
-    user_Pwd: req.body.user_Pwd ? req.body.user_Pwd : false,
+    user_Pwd: req.body.user_Pwd,
     user_Type: req.body.user_Type
   };
 
   // Save User in the database
-  User.create(User)
+  User.create(user)
     .then(data => {
       res.send(data);
     })
@@ -36,17 +38,17 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     const user_ID = req.query.user_ID;
     var condition = user_ID ? { user_ID: { [Op.like]: `%${user_ID}%` } } : null;
-  
-    User.findAll({ where: condition })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving Users."
-        });
+
+    User.findAll({where : condition})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving tutorials."
       });
+    });
 };
 
 // Find a single User with an user_ID
@@ -137,18 +139,3 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-/*
-// Find all user_Pwd Users
-exports.findAlluser_Pwd = (req, res) => {
-    User.findAll({ where: { user_Pwd: true } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Users."
-      });
-    });
-};
-*/

@@ -29,5 +29,5 @@ module.exports = (sequelize, Sequelize) => {
 
   // the defined model is the class itself
   console.log(Venue === sequelize.models.Venue); // true
-
+  return Venue;
 }
