@@ -6,7 +6,6 @@ import "./App.css";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
-import User from "./components/user.component";
 import AddUser from "./components/add-user.component";
 import UserList from "./components/user-list.component";
 
@@ -54,11 +53,6 @@ class App extends Component {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={"/users/:id"} className="nav-link">
-              User
-            </Link>
-          </li>
-          <li className="nav-item">
             <Link to={"/add"} className="nav-link">
               Add User
             </Link>
@@ -70,7 +64,6 @@ class App extends Component {
         <Switch>
           <Route exact path={["/", "/users"]} component={UserList} />
           <Route exact path="/add" component={AddUser} />
-          <Route exact path="/users/:id" component={User} />
           <Route exact path="/login" component={Login} />
 
           </Switch>

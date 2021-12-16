@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import UserDataService from "../services/user.service";
+import User from "./user.component"
 import { Link } from "react-router-dom";
 
 export default class UsersList extends Component {
@@ -37,8 +38,7 @@ export default class UsersList extends Component {
       .then(response => {
         this.setState({
           Users: response.data
-        });
-        console.log("Reached User List Component and already set state");        
+        }); 
         console.log(response.data);
       })
       .catch(e => {
@@ -86,7 +86,8 @@ export default class UsersList extends Component {
   }
 
   render() {
-    const { searchName, Users, currentUser, currentIndex } = this.state;
+    const { Users, currentUser, currentIndex, searchName  } = this.state;
+    const filteredUsers = Users.filter(user => user.user_Name.toLowerCase().includes(searchName.toLowerCase()));
 
     return (
       <div className="list row">
@@ -115,7 +116,7 @@ export default class UsersList extends Component {
 
           <ul className="list-group">
             {Users &&
-              Users.map((User, index) => (
+              filteredUsers.map((User, index) => (
                 <li
                   className={
                     "list-group-item " +
@@ -142,32 +143,33 @@ export default class UsersList extends Component {
                 <h4>User Profile</h4>
               <div>
                 <label>
-                  <strong>User ID:</strong>
+                  <strong>User ID:</strong> {currentUser.user_ID}
                 </label>{" "}
-                {currentUser.user_Id}
+                
               </div>
               <div>
-              <h4>User</h4>
-              <div>
-                <label>
-                  <strong>User Name:</strong>
-                </label>{" "}
-                {currentUser.user_Name}
+                
+                <div>
+                  <label>
+                    <strong>User Name:</strong> {currentUser.user_Name}
+                  </label>{" "}
+                  
+                </div>
+                <div>
+                  <label>
+                    <strong>User Type:</strong> {currentUser.user_Type}
+                  </label>{" "}
+                  
+                </div>
               </div>
-              <div>
-                <label>
-                  <strong>User Type:</strong>
-                </label>{" "}
-                {currentUser.user_Type}
-              </div>
-            </div>
-          
+              
               <Link
-                to={"/users/" + currentUser.user_Id}
-                className="badge badge-warning"
+                to={"/users/:" + currentUser.user_ID} render={(props) => <User {...props}/>}
+                className="btn btn-primary"
               >
                 Edit
               </Link>
+              
             </div>
           ) : (
             <div>

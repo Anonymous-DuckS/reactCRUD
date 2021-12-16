@@ -13,7 +13,7 @@ export default class User extends Component {
 
     this.state = {
       currentUser: {
-        user_Id: null,
+        user_ID: null,
         user_Name: "",
         user_Pwd: "",
         user_Type: 0
@@ -23,7 +23,8 @@ export default class User extends Component {
   }
 
   componentDidMount() {
-    this.getUser(this.props.match.params.user_Id);
+    console.log(this.props);
+    this.getUser(this.props.match.params.user_ID);
   }
 
   onChangeUser_Name(e) {
@@ -61,8 +62,8 @@ export default class User extends Component {
     }));
   }
 
-  getUser(user_Id) {
-    UserDataService.get(user_Id)
+  getUser(user_ID) {
+    UserDataService.get(user_ID)
       .then(response => {
         this.setState({
           currentUser: response.data
@@ -92,7 +93,7 @@ export default class User extends Component {
   }
 
   deleteUser() {    
-    UserDataService.delete(this.state.currentUser.user_Id)
+    UserDataService.delete(this.state.currentUser.user_ID)
       .then(response => {
         console.log(response.data);
         this.props.history.push('/users')

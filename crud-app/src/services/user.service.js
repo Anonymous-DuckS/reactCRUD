@@ -5,20 +5,20 @@ class UserDataService {
     return http.get(`/users`);
   }
 
-  get(user_Id) {
-    return http.get(`/users/${user_Id}`);
+  get(user_ID) {
+    return http.get(`/users/${user_ID}`);
   }
 
   create(data) {
     return http.post(`/users`, data);
   }
 
-  update(user_Id, data) {
-    return http.put(`/users/${user_Id}`, data);
+  update(user_ID, data) {
+    return http.put(`/users/${user_ID}`, data);
   }
 
-  delete(user_Id) {
-    return http.delete(`/users/${user_Id}`);
+  delete(user_ID) {
+    return http.delete(`/users/${user_ID}`);
   }
 
   deleteAll() {
@@ -26,7 +26,8 @@ class UserDataService {
   }
 
   findByName(user_Name) {
-    return http.get(`/users?name=${user_Name}`);
+    console.log(`/users?user_Name=${user_Name}`);
+    return http.get(`/users?user_Name=${user_Name}`);
   }
 }
 
